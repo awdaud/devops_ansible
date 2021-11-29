@@ -22,13 +22,6 @@
         rule: allow
         port: "3306"
         proto: tcp
-
-    # - name: Enable remote login to mysql by allowing all hosts to connect
-    #   lineinfile:
-    #      path: /etc/mysql/mysql.conf.d/mysqld.cnf
-    #      regexp: '^mysqlx-bind-address'
-    #      line: 'mysqlx-bind-address = 0.0.0.0'
-    #      backup: yes
    
     - name: Enable remote login to mysql by allowing all hosts to connect
       lineinfile:
