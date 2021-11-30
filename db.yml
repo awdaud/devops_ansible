@@ -1,0 +1,76 @@
+---
+- hosts: db
+  become: true
+  
+  
+
+  tasks:
+    - name: Update apt-get repo and cache
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+    - name: Ensure mysql-server is present
+      apt:
+        name:
+          - mysql-server
+          - php-mysql
+          - python3-pymysql
+        state: present
+
+        
+    - name: Replace a localhost entry with our own
+      ansible.builtin.lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: bind-address = 0.0.0.0
+      notify: Restart mysql
+
+    - name: Create database remote users with name 'wahab' with all database privileges
+      mysql_user:
+        name: wahab
+        password: password
+        priv: '*.*:ALL,GRANT'
+        host: ''
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+      
+       
+
+
+    - name: Create WAHABDB Database
+      mysql_db:
+        name: WAHABDB
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+
+    # - name: Restart MySQL Services
+    #   service:
+    #     name: mysql
+    #     state: restarted
+
+    - name: Allow all access to apps
+      ufw:
+        rule: allow
+        port: '3306'
+        state: enabled
+
+  handlers:
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
+
+
+
+
+
+        
+
+    
+
+    
+     
