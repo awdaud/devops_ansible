@@ -32,7 +32,7 @@
         name: wahab
         password: password
         priv: '*.*:ALL,GRANT'
-        host: ''
+        host_all: yes
         state: present
         login_unix_socket: /var/run/mysqld/mysqld.sock
 

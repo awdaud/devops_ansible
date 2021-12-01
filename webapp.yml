@@ -43,7 +43,7 @@
         
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
-        src: /Ansible/index.php
+        src: index.php
         dest: /var/www/html/index.php
       notify: Restart apache2
 

@@ -49,14 +49,14 @@
           # HAproxy for Web Servers
           #------------------------------------------------------------------------------
           frontend web
-            bind 172.20.20.10:80
+            bind 192.168.56.10:80
             mode http
             default_backend web
 
           backend web
             balance roundrobin
-            server web1 172.20.20.11:80 check
-            server web2 172.20.20.12:80 check
+            server web1 192.168.56.11:80 check
+            server web2 192.168.56.12:80 check
 
     notify: Restart haproxy
 
